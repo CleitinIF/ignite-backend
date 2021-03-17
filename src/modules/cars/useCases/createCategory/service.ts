@@ -1,5 +1,6 @@
-import { ICategoryRepository } from "../repositories";
-import { Category } from "../models/Category";
+import { Service } from "../../../../shared/presentation/protocols/service";
+import { ICategoryRepository } from "../../repositories";
+import { Category } from "../../models/Category";
 
 interface Request {
   id?: string;
@@ -7,10 +8,10 @@ interface Request {
   description: string;
 }
 
-export class CreateCategoryService {
+export class CreateCategoryService implements Service<Request, Category> {
   constructor(private categoryRepository: ICategoryRepository) {}
 
-  execute({ name, description }: Request): Category {
+  async execute({ name, description }: Request): Promise<Category> {
     const categoryAlreadyExists = this.categoryRepository.getByName(name);
 
     if (categoryAlreadyExists) {
