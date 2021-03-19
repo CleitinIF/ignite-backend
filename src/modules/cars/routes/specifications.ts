@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { adaptRoute } from "../../../shared/adapters";
+import { adaptRoute } from "../../../shared/main/adapters";
 import {
   createSpecificationController,
   listSpecificationsController,

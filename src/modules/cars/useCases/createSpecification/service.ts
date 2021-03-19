@@ -13,7 +13,7 @@ export class CreateSpecificationService
   constructor(private specificationRepository: ISpecificationRepository) {}
 
   async execute({ name, description }: Request): Promise<Specification> {
-    const specificationAlreadyExists = this.specificationRepository.getByName(
+    const specificationAlreadyExists = await this.specificationRepository.getByName(
       name
     );
 
@@ -21,7 +21,7 @@ export class CreateSpecificationService
       throw new Error("Specification already exists!");
     }
 
-    const specification = this.specificationRepository.create({
+    const specification = await this.specificationRepository.create({
       name,
       description,
     });

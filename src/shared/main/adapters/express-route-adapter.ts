@@ -1,12 +1,13 @@
 import { Request, Response } from "express";
 
-import { Controller } from "../presentation/protocols";
+import { Controller } from "../../presentation/protocols";
 
 export const adaptRoute = (controller: Controller) => {
   return async (req: Request, res: Response) => {
     const request = {
       ...(req.body || {}),
       ...(req.params || {}),
+      file: req.file || undefined,
     };
     const httpResponse = await controller.handle(request);
 

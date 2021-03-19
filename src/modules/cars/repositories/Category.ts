@@ -2,9 +2,9 @@ import { Repository } from "../../../shared/presentation/protocols";
 import { Category } from "../models/Category";
 
 export interface ICategoryRepository extends Repository<Category> {
-  create({ id, name, description }: CreateCategoryDTO): Category;
-  getAll(): Category[];
-  getByName(name: string): Category | undefined;
+  create({ id, name, description }: CreateCategoryDTO): Promise<Category>;
+  getAll(): Promise<Category[]>;
+  getByName(name: string): Promise<Category | undefined>;
 }
 
 export interface CreateCategoryDTO {
@@ -29,7 +29,11 @@ export class CategoryRepository implements ICategoryRepository {
     return CategoryRepository.instance;
   }
 
-  public create({ id, name, description }: CreateCategoryDTO): Category {
+  public async create({
+    id,
+    name,
+    description,
+  }: CreateCategoryDTO): Promise<Category> {
     const category = new Category({ id, name, description });
 
     this.categories.push(category);
@@ -37,11 +41,11 @@ export class CategoryRepository implements ICategoryRepository {
     return category;
   }
 
-  public getAll(): Category[] {
+  public async getAll(): Promise<Category[]> {
     return this.categories;
   }
 
-  public getByName(name: string): Category | undefined {
+  public async getByName(name: string): Promise<Category | undefined> {
     return this.categories.find((category) => category.name === name);
   }
 }

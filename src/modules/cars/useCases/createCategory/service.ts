@@ -12,13 +12,13 @@ export class CreateCategoryService implements Service<Request, Category> {
   constructor(private categoryRepository: ICategoryRepository) {}
 
   async execute({ name, description }: Request): Promise<Category> {
-    const categoryAlreadyExists = this.categoryRepository.getByName(name);
+    const categoryAlreadyExists = await this.categoryRepository.getByName(name);
 
     if (categoryAlreadyExists) {
       throw new Error("Category already exists!");
     }
 
-    const category = this.categoryRepository.create({
+    const category = await this.categoryRepository.create({
       name,
       description,
     });

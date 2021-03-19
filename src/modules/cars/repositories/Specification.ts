@@ -2,9 +2,13 @@ import { Repository } from "../../../shared/presentation/protocols";
 import { Specification } from "../models/Specification";
 
 export interface ISpecificationRepository extends Repository<Specification> {
-  create({ id, name, description }: CreateSpecificationDTO): Specification;
-  getAll(): Specification[];
-  getByName(name: string): Specification | undefined;
+  create({
+    id,
+    name,
+    description,
+  }: CreateSpecificationDTO): Promise<Specification>;
+  getAll(): Promise<Specification[]>;
+  getByName(name: string): Promise<Specification | undefined>;
 }
 
 export interface CreateSpecificationDTO {
@@ -29,11 +33,11 @@ export class SpecificationRepository implements ISpecificationRepository {
     return SpecificationRepository.instance;
   }
 
-  public create({
+  public async create({
     id,
     name,
     description,
-  }: CreateSpecificationDTO): Specification {
+  }: CreateSpecificationDTO): Promise<Specification> {
     const specification = new Specification({ id, name, description });
 
     this.specifications.push(specification);
@@ -41,11 +45,11 @@ export class SpecificationRepository implements ISpecificationRepository {
     return specification;
   }
 
-  public getAll(): Specification[] {
+  public async getAll(): Promise<Specification[]> {
     return this.specifications;
   }
 
-  public getByName(name: string): Specification | undefined {
+  public async getByName(name: string): Promise<Specification | undefined> {
     return this.specifications.find(
       (specification) => specification.name === name
     );
