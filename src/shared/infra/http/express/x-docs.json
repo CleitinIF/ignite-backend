@@ -21,15 +21,19 @@
                 "type": "object",
                 "properties": {
                   "id": {
-                    "type": "uuid"
+                    "type": "string",
+                    "format": "uuid"
                   },
                   "name": {
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 40
                   },
                   "description": {
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 120
                   }
                 },
+                "required": ["name", "description"],
                 "example": {
                   "name": "category name example",
                   "description": "this is a description"
@@ -41,27 +45,31 @@
         "responses": {
           "201": {
             "description": "Created",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "uuid"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "createdAt": {
-                  "type": "date"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "uuid"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "type": "date"
+                    }
+                  },
+                  "example": {
+                    "id": "ba38161a-3df2-40e2-91ea-27b06b8ae17e",
+                    "name": "SUV",
+                    "description": "Utilitário esportivo",
+                    "created_at": "2021-03-17T23:39:45.187Z"
+                  }
                 }
-              },
-              "example": {
-                "id": "ba38161a-3df2-40e2-91ea-27b06b8ae17e",
-                "name": "SUV",
-                "description": "Utilitário esportivo",
-                "created_at": "2021-03-17T23:39:45.187Z"
               }
             }
           },
